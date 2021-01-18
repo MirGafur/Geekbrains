@@ -1,0 +1,109 @@
+//
+1. Создать список и заполнить его элементами различных типов данных. Реализовать скрипт проверки типа данных каждого элемента. 
+Использовать функцию type() для проверки типа. Элементы списка можно не запрашивать у пользователя, а указать явно, в программе.
+//
+
+my_list = [None, 0, True, False, "0", 0.1]
+
+
+def for_type(el):
+    for el in range(len(my_list)):
+        print(type(my_list[el]))
+    return
+
+
+for_type(my_list)
+
+
+//
+2. Для списка реализовать обмен значений соседних элементов, т.е. Значениями обмениваются элементы с индексами 0 и 1, 2 и 3 и т.д. 
+При нечетном количестве элементов последний сохранить на своем месте. Для заполнения списка элементов необходимо использовать функцию input().
+//
+
+
+max_quantity = int(input("Введите количество элементов списка >>>"))
+my_list = []
+i = 0
+el = 0
+while i < max_quantity:
+    my_list.append(input("Введите следующий эелемент >>> "))
+    i += 1
+
+for el_list in range(int(len(my_list) / 2)):
+    my_list[el], my_list[el + 1] = my_list[el + 1], my_list[el]
+    el += 2
+print(my_list)
+
+
+//
+3. Пользователь вводит месяц в виде целого числа от 1 до 12. Сообщить к какому времени года относится месяц (зима, весна, лето, осень). 
+Напишите решения через list и через dict.
+//
+
+
+my_list = ['Лето', 'Осень', 'Зима', 'Весна']
+my_dict = {1: 'Лето', 2: 'Осень', 3: 'Зима', 4: 'Весна'}
+month = int(input("Введите месяц по номеру >>> "))
+# Лето
+if month == 6 or month == 7 or month == 8:
+    print(my_list[0])
+    print(my_dict.get(1))
+# Осень
+elif month == 9 or month == 10 or month == 11:
+    print(my_list[1])
+    print(my_dict.get(2))
+# Зима
+elif month == 1 or month == 2 or month == 12:
+    print(my_list[2])
+    print(my_dict.get(3))
+# Весна
+elif month == 3 or month == 4 or month == 5:
+    print(my_list[3])
+    print(my_dict.get(4))
+
+else:
+    print("Месяцев всего 12 =)")
+
+
+//
+4. Пользователь вводит строку из нескольких слов, разделённых пробелами. Вывести каждое слово с новой строки. 
+Строки необходимо пронумеровать. Если в слово длинное, выводить только первые 10 букв в слове.
+//
+
+
+string = input("введите строку ")
+word = []
+num = 1
+for el in range(string.count(' ') + 1):
+    word = string.split()
+    if len(str(word)) <= 10:
+        print(f" {num} {word[el]}")
+        num += 1
+    else:
+        print(f" {num} {word[el][0:10]}")
+        num += 1
+
+
+//
+5. Реализовать структуру «Рейтинг», представляющую собой не возрастающий набор натуральных чисел. У пользователя необходимо запрашивать новый элемент рейтинга. 
+Если в рейтинге существуют элементы с одинаковыми значениями, то новый элемент с тем же значением должен разместиться после них.
+//
+
+my_list = [7, 5, 3, 3, 2]
+print(f"Рейтинг - {my_list}")
+num = int(input("Введите число или 111 для выхода "))
+while num != 111:
+    for el in range(len(my_list)):
+        if my_list[el] == num:
+            my_list.insert(el + 1, num)
+            break
+        elif my_list[0] < num:
+            my_list.insert(0, num)
+        elif my_list[-1] > num:
+            my_list.append(num)
+        elif my_list[el] > num > my_list[el + 1]:
+            my_list.insert(el + 1, num)
+    print(f"Рейтинг - {my_list}")
+    num = int(input("Введите число "))
+
+//

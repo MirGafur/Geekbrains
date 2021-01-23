@@ -109,7 +109,7 @@ my_sum()
 //
 
 
-def int_func(*args) :
+def int_func() :
     word = input("Введите текст ")
     print(word.title())
     return

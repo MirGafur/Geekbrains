@@ -41,7 +41,7 @@ print(my_func(name="Мир", surname="Гафур", year="1990", city="Москв
 
 
 def my_func(arg1, arg2, arg3) :
-    if arg3 <= arg1 and arg2 >= arg3 :
+    if arg1 >= arg3 and arg2 >= arg3:
         return arg1 + arg2
     elif arg2 < arg1 < arg3 :
         return arg1 + arg3

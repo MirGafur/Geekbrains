@@ -40,3 +40,146 @@ my_file.close()
 
 
 //
+3. Создать текстовый файл (не программно), построчно записать фамилии сотрудников и величину их окладов (не менее 10 строк). 
+Определить, кто из сотрудников имеет оклад менее 20 тыс., вывести фамилии этих сотрудников. Выполнить подсчет средней величины дохода сотрудников.
+Пример файла:
+
+Иванов 23543.12
+Петров 13749.32
+//
+
+
+with open('text.txt', 'r', encoding='utf-8') as my_file:
+    sal = []
+    poor = []
+    for line in my_file:
+        if len(line) < 2:
+            continue
+        arr = line.strip('\n').split(' ')
+        salary = int(arr[1])
+        if salary < 20000:
+            poor.append(arr[0])
+        sal.append(salary)
+print(f'Оклад меньше 20.000 {poor}, средний оклад {sum(sal) / len(sal)}')
+
+
+//
+4. Создать (не программно) текстовый файл со следующим содержимым:
+One — 1
+Two — 2
+Three — 3
+Four — 4
+
+Необходимо написать программу, открывающую файл на чтение и считывающую построчно данные. При этом английские числительные должны заменяться на русские. 
+Новый блок строк должен записываться в новый текстовый файл.
+//
+
+
+rus = {'One': 'Один', 'Two': 'Два', 'Three': 'Три', 'Four': 'Четыре'}
+rus_data = []
+
+with open('text.txt', 'r', encoding='utf-8') as 04:
+    for i in 04:
+        i = i.split(' ', 1)
+        rus_data.append(rus[i[0]] + ' ' + i[1])
+    print(rus_data)
+
+with open('text.txt', 'w', encoding='utf-8') as file_obj:
+    file_obj.writelines(rus_data)
+   
+   
+//
+5. Создать (программно) текстовый файл, записать в него программно набор чисел, разделенных пробелами. 
+Программа должна подсчитывать сумму чисел в файле и выводить ее на экран.
+//
+
+
+def summary():
+    try:
+        with open('text.txt', 'w+') as file_obj:
+            line = input('Введите цифры через пробел >>> ')
+            file_obj.writelines(line)
+            my_numb = line.split()
+
+            print(sum(map(int, my_numb)))
+    except IOError:
+        print('Ошибка в файле')
+    except ValueError:
+        print('Ошибка ввода-вывода')
+
+
+summary()
+
+
+//
+6. Необходимо создать (не программно) текстовый файл, где каждая строка описывает учебный предмет и наличие лекционных, 
+практических и лабораторных занятий по этому предмету и их количество. Важно, чтобы для каждого предмета не обязательно были все типы занятий. 
+Сформировать словарь, содержащий название предмета и общее количество занятий по нему. Вывести словарь на экран.
+
+Примеры строк файла: Информатика: 100(л) 50(пр) 20(лаб).
+Физика: 30(л) — 10(лаб)
+Физкультура: — 30(пр) —
+Пример словаря: {“Информатика”: 170, “Физика”: 40, “Физкультура”: 30}
+//
+
+
+def handle_str(s):
+    filtered = ''.join(i for i in s if i.isdigit())
+    if len(filtered) < 1:
+        return 0
+    return int(filtered)
+
+
+subjects = {}
+with open('text.txt', 'r', encoding='utf-8') as 06:
+    for line in 06:
+        line = line.split()
+        if len(line) < 4:
+            continue
+        subjects[line[0].strip(':')] = handle_str(line[1]) + handle_str(line[2]) + handle_str(line[3])
+print(subjects)
+
+
+//
+7. Создать вручную и заполнить несколькими строками текстовый файл, в котором каждая строка должна содержать данные о фирме: название, форма собственности, выручка, издержки.
+Пример строки файла: firm_1 ООО 10000 5000.
+
+Необходимо построчно прочитать файл, вычислить прибыль каждой компании, а также среднюю прибыль. Если фирма получила убытки, в расчет средней прибыли ее не включать.
+Далее реализовать список. Он должен содержать словарь с фирмами и их прибылями, а также словарь со средней прибылью. Если фирма получила убытки, также добавить ее в словарь (со значением убытков).
+Пример списка: [{“firm_1”: 5000, “firm_2”: 3000, “firm_3”: 1000}, {“average_profit”: 2000}].
+
+Итоговый список сохранить в виде json-объекта в соответствующий файл.
+Пример json-объекта:
+
+[{"firm_1": 5000, "firm_2": 3000, "firm_3": 1000}, {"average_profit": 2000}]
+//
+
+
+import json
+
+lst = []
+firms_profit = {}
+avg_dict = {}
+total_profit = 0
+firm_prof_counter = 0
+with open('text1.txt', 'r', encoding='utf-8') as f_obj:
+    for line in f_obj:
+        firm, _, revenue, costs = line.split()
+        profit = int(revenue) - int(costs)
+        firms_profit[firm] = profit
+        if profit >= 0:
+            total_profit += profit
+            firm_prof_counter += 1
+    try:
+        average_profit = total_profit / firm_prof_counter
+    except ZeroDivisionError:
+        print('Нет фирм с выручкой')
+
+    avg_dict['avg_profit'] = average_profit
+    lst = [firms_profit, avg_dict]
+
+with open('file_7.json', 'w', encoding='utf-8') as js_file:
+    json.dump(lst, js_file, ensure_ascii=False)
+
+js_f = json.dumps(lst, ensure_ascii=False)
+print(f'Создан файл с расширением json {js_f}')
